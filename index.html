@@ -220,3 +220,35 @@ h1,h2,h3{margin-top:0;color:var(--accent);}
 </div>
 
 <script>
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = lightbox.querySelector('img');
+const images = Array.from(document.querySelectorAll('.work-item img'));
+let currentIndex = 0;
+
+images.forEach((img,index)=>{
+  img.addEventListener('click',()=>{
+    // إذا الصورة ضمن الدورات والشهادات تجاهل فتح لايت بوكس
+    if(img.parentElement.tagName.toLowerCase() === 'a') return;
+    currentIndex=index;
+    lightboxImg.src=images[currentIndex].src;
+    lightbox.classList.add('show');
+  });
+});
+
+lightbox.querySelector('.next').addEventListener('click',(e)=>{
+  e.stopPropagation();
+  currentIndex=(currentIndex+1)%images.length;
+  lightboxImg.src=images[currentIndex].src;
+});
+lightbox.querySelector('.prev').addEventListener('click',(e)=>{
+  e.stopPropagation();
+  currentIndex=(currentIndex-1+images.length)%images.length;
+  lightboxImg.src=images[currentIndex].src;
+});
+
+lightbox.addEventListener('click',()=>{
+  lightbox.classList.remove('show');
+});
+</script>
+</body>
+</html>
