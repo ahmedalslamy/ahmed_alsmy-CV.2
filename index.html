@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ar">
 <head>
@@ -9,13 +10,10 @@
 <style>
 :root{
   color-scheme: dark;
-  --bg:#071026; /* أقسمت أغمق شوية عشان يطلع نفس الإحساس */
-  --card:#0f2430;
-  --card-2:#122731;
-  --text:#dbe7ef;
-  --muted:#94a3b8;
+  --bg:#0f172a;
+  --card:#1e293b;
+  --text:#e2e8f0;
   --accent:#06b6d4;
-  --glass: rgba(255,255,255,0.02);
 }
 *{box-sizing:border-box}
 body{
@@ -28,8 +26,6 @@ body{
   direction:rtl;
   position: relative;
   overflow-x: hidden;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
 }
 body::before {
   content: "";
@@ -38,398 +34,175 @@ body::before {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 75% 15%, rgba(6, 182, 212, 0.06) 0%, transparent 20%),
-              radial-gradient(circle at 25% 85%, rgba(6, 182, 212, 0.05) 0%, transparent 20%);
+  background: radial-gradient(circle at 75% 15%, rgba(6, 182, 212, 0.1) 0%, transparent 20%),
+              radial-gradient(circle at 25% 85%, rgba(6, 182, 212, 0.08) 0%, transparent 20%);
   z-index: -1;
   animation: moveGradient 45s infinite alternate linear;
 }
 @keyframes moveGradient {
   0% { transform: translate(0,0) rotate(0deg); }
-  100% { transform: translate(12%,12%) rotate(12deg); }
+  100% { transform: translate(15%,15%) rotate(15deg); }
 }
-.container{
-  max-width:980px;
-  margin:auto;
-  padding:28px 18px;
-}
+.container{ max-width:800px; margin:auto; padding:15px; }
 .card{
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-  border-radius:14px;
-  padding:18px;
+  background:var(--card);
+  padding:15px;
+  border-radius:16px;
   margin-bottom:20px;
-  border:1px solid rgba(255,255,255,0.03);
-  box-shadow: 0 6px 20px rgba(2,6,23,0.55);
+  border:1px solid #334155;
 }
-.header-card{
-  display:flex;
-  align-items:center;
-  gap:16px;
-}
-.header-card img{
-  width:78px;
-  height:78px;
-  border-radius:50%;
-  object-fit:cover;
-  border:2px solid rgba(255,255,255,0.04);
-  box-shadow: 0 6px 18px rgba(6,182,212,0.05);
-}
-h1,h2,h3{margin:0;color:var(--accent);}
-h2{font-size:20px}
-p{margin:6px 0;color:var(--text);opacity:.95}
-/* main works grid (existing) */
-.works{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
-  gap:12px;
-}
-.work-item{
-  background:var(--card-2);
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,0.03);
-  transition:transform .25s ease, box-shadow .25s ease;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.work-item:hover{transform:translateY(-6px); box-shadow:0 14px 30px rgba(2,6,23,0.6);}
-.work-item img{
-  width:100%;
-  height:100px;
-  object-fit:cover;
-  display:block;
-  border-radius:8px;
-}
-/* New mini-cards grid under "من أنا" */
-.profile-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:12px;
-  margin-top:14px;
-}
-.mini-card{
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
-  border-radius:12px;
-  padding:12px;
-  display:flex;
-  gap:12px;
-  align-items:flex-start;
-  border:1px solid rgba(255,255,255,0.03);
-  transition:transform .3s ease, box-shadow .3s ease, background .25s;
-  opacity:0;
-  transform:translateY(12px);
-}
-.mini-card.show{ opacity:1; transform:translateY(0); }
-.mini-card:hover{ transform:translateY(-6px); box-shadow:0 12px 24px rgba(2,6,23,0.5); }
-.mini-icon{
-  min-width:56px;
-  min-height:56px;
-  border-radius:10px;
-  background:linear-gradient(135deg, rgba(6,182,212,0.12), rgba(6,182,212,0.06));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
-  color:var(--accent);
-  flex-shrink:0;
-  border:1px solid rgba(6,182,212,0.06);
-}
-.mini-content h4{ margin:0 0 6px 0; color:var(--accent); font-size:15px; }
-.mini-content p, .mini-content ul{ margin:0; font-size:14px; color:var(--text); opacity:.95; }
-.mini-content ul{ padding-right:16px; margin-top:6px; list-style:disc; }
-.mini-content a{ color:var(--accent); text-decoration:none; }
-
-/* personal info layout inside mini card */
-.info-list{ font-size:14px; color:var(--text); line-height:1.5; }
-.info-list strong{ color:var(--text); }
-
-/* small responsive tweaks */
-@media (max-width:700px){
-  .header-card{flex-direction:row}
-  .mini-card{padding:10px}
-  .mini-icon{min-width:48px;min-height:48px}
-  body{padding-bottom:60px}
-}
-.footer{text-align:center;margin:30px 0 10px;color:var(--muted);font-size:14px;}
-
-/* Lightbox (keep original) */
-.lightbox{
-  display:none;
-  position:fixed;
-  z-index:999;
-  top:0;left:0;
-  width:100%;height:100%;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-}
-.lightbox img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
-  box-shadow:0 0 25px rgba(0,0,0,0.5);
-}
-.lightbox.show{display:flex;}
-.lightbox button{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:35px;
-  color:white;
-  background:none;
-  border:none;
-  cursor:pointer;
-  padding:10px;
-  user-select:none;
-}
-.lightbox .prev{left:15px;}
-.lightbox .next{right:15px;}
-
-/* small nice heading for sections */
-.section-title{ color:var(--accent); margin-bottom:10px; font-weight:600; }
-
-/* subtle rounded grid look for works images */
-.work-item img{ height:96px; border-radius:10px; }
-
-/* link button */
+h1,h2,h3{margin-top:0;color:var(--accent);}
 .btn{
-  display:inline-block;
-  background:var(--accent);
-  color:#fff;
-  padding:8px 16px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:600;
+  display:inline-block; background:var(--accent); color:#fff;
+  padding:8px 16px; border-radius:8px; text-decoration:none; font-weight:600;
   transition:background .3s;
 }
 .btn:hover{background:#0891b2;}
+.works{ display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:10px; }
+.work-item{
+  background:#0f172a; border-radius:12px; overflow:hidden;
+  border:1px solid #334155; transition:.3s; cursor:pointer;
+}
+.work-item:hover{transform:scale(1.03);}
+.work-item img{ width:100%; height:100px; object-fit:cover; display:block; }
+.footer{text-align:center;margin:30px 0 10px;color:#94a3b8;font-size:14px;}
+.lightbox{
+  display:none; position:fixed; z-index:999; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.85); justify-content:center; align-items:center;
+}
+.lightbox img{
+  max-width:90%; max-height:90%; border-radius:12px; box-shadow:0 0 25px rgba(0,0,0,0.5);
+}
+.lightbox.show{display:flex;}
+.lightbox button{
+  position:absolute; top:50%; transform:translateY(-50%);
+  font-size:35px; color:white; background:none; border:none; cursor:pointer; padding:10px; user-select:none;
+}
+.lightbox .prev{left:15px;} .lightbox .next{right:15px;}
+@media (max-width:480px){ .work-item img{height:80px;} }
 </style>
 </head>
 <body>
 <div class="container">
-
-  <!-- Header card -->
-  <div class="card header-card" style="justify-content:space-between;">
-    <div style="display:flex;align-items:center;gap:14px;">
-      <img src="https://i.ibb.co/0VWQv8F1/your-photo.jpg" alt="أحمد السلامي">
-      <div>
-        <h2>أحمد محمد السلامي</h2>
-        <p style="margin-top:6px;color:var(--muted)">مصمم ومسوق إلكتروني — تصميم، طباعة DTF، وإدارة حملات إعلانية</p>
-        <p style="margin-top:6px;color:var(--muted);font-size:13px">صفحة شخصية — عرض أعمال ووسائل التواصل</p>
-      </div>
-    </div>
-    <div style="text-align:left;">
-      <a class="btn" href="https://wa.me/966509067209?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%AD%D8%A8%20%D8%A3%D8%AA%D9%88%D8%A7%D8%B5%D9%84%20%D9%85%D8%B9%D9%83%D9%85" target="_blank">تواصل عبر واتساب</a>
+  <div class="card" style="display:flex;align-items:center;gap:12px;">
+    <img src="https://i.ibb.co/0VWQv8F1/your-photo.jpg" alt="أحمد السلامي" style="width:70px;height:70px;border-radius:50%;object-fit:cover;">
+    <div>
+      <h2>أحمد محمد السلامي</h2>
+      <p>مصمم ومسوق إلكتروني بخبرة عملية في التصميم والطباعة وإدارة الحملات الإعلانية</p>
+      <p>صفحة شخصية — عرض أعمال ووسائل التواصل</p>
     </div>
   </div>
 
-  <!-- About card (enhanced) -->
-  <div class="card" id="aboutCard">
-    <h3 class="section-title">من أنا</h3>
-    <p style="margin-bottom:12px;">
-      أنا <strong>أحمد محمد السلامي</strong>، مصمم جرافيك وأخصائي طباعة <strong>DTF</strong> ومسوق إلكتروني بخبرة تفوق خمس سنوات. أعمل على دمج الإبداع الفني مع الدقة التشغيلية لتسليم أعمال عالية الجودة تساهم في تحقيق أهداف العلامات التجارية وزيادة نتائج الحملات الإعلانية.
-    </p>
-
-    <!-- Mini cards grid -->
-    <div class="profile-grid" id="profileGrid">
-      <!-- الخبرات العملية -->
-      <div class="mini-card">
-        <div class="mini-icon" aria-hidden>
-          <!-- briefcase SVG -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 7.5A2.5 2.5 0 015.5 5h13A2.5 2.5 0 0121 7.5v8A2.5 2.5 0 0118.5 18h-13A2.5 2.5 0 013 15.5v-8z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M8 5v2.5h8V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="mini-content">
-          <h4>الخبرات العملية</h4>
-          <p style="margin-top:6px;">
-            أعمل لدى <strong>نيو سبورت</strong> منذ عام <strong>2019</strong> حتى الآن. مسؤول عن تصميم المواد الإعلانية، تجهيز ملفات الطباعة (DTF)، وضبط إعدادات الإنتاج، بالإضافة إلى إدارة بعض الحملات التسويقية وتحسين أداء المتاجر الإلكترونية.
-          </p>
-        </div>
-      </div>
-
-      <!-- المهارات التقنية -->
-      <div class="mini-card">
-        <div class="mini-icon" aria-hidden>
-          <!-- cog SVG -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 15.5A3.5 3.5 0 1112 8.5a3.5 3.5 0 010 7z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-0 2.83l-1.41 1.41a2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2h-2a2 2 0 01-2-2v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0L2.2 19.7a2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2v-2a2 2 0 012-2h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82L3.3 2.2a2 2 0 010-2.83L4.71. - sorry" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="mini-content">
-          <h4>المهارات التقنية</h4>
-          <ul style="margin-top:6px;">
-            <li>إتقان <strong>Adobe Photoshop</strong> و<strong>Illustrator</strong></li>
-            <li>تشغيل وضبط طابعات <strong>DTF</strong> والتحكم في إعدادات الطباعة</li>
-            <li>تحويل التصاميم إلى ملفات جاهزة للطباعة بجودة عالية</li>
-            <li>إدارة المتاجر الإلكترونية (منصة <strong>سلة</strong>) وتنفيذ حملات إعلانية</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- المهارات الشخصية -->
-      <div class="mini-card">
-        <div class="mini-icon" aria-hidden>
-          <!-- lightbulb SVG -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 18h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-            <path d="M10 22h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-            <path d="M12 2a6 6 0 00-4 10c.5.4 1 1 1.3 1.8A3.5 3.5 0 009.5 17H14a3.5 3.5 0 00.2-2.2c.3-.8.8-1.4 1.3-1.8A6 6 0 0012 2z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="mini-content">
-          <h4>المهارات الشخصية</h4>
-          <ul style="margin-top:6px;">
-            <li>مهارات تواصل فعّالة وخدمة عملاء</li>
-            <li>إدارة الوقت والمرونة في بيئات العمل</li>
-            <li>الإبداع والابتكار في الحلول البصرية</li>
-            <li>العمل بروح الفريق وتحفيز الأعضاء</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- معلومات شخصية -->
-      <div class="mini-card">
-        <div class="mini-icon" aria-hidden>
-          <!-- user SVG -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 21v-2a4 4 0 00-3-3.87" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M4 21v-2a4 4 0 013-3.87" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="mini-content">
-          <h4>معلومات شخصية</h4>
-          <p class="info-list" style="margin-top:6px;">
-            <strong>الاسم:</strong> أحمد محمد السلامي<br>
-            <strong>تاريخ الميلاد:</strong> 23 يوليو 1990<br>
-            <strong>الموقع:</strong> جدة، المملكة العربية السعودية<br>
-            <strong>البريد:</strong> <a href="mailto:ahmed.m.alslamy@gmail.com">ahmed.m.alslamy@gmail.com</a><br>
-            <strong>الجوال:</strong> <a href="tel:+966509067209">+966509067209</a><br>
-            <strong>المتجر:</strong> <a href="https://newspoort.com/" target="_blank">newspoort.com</a>
-          </p>
-        </div>
-      </div>
-
-    </div> <!-- end profile-grid -->
-
-  </div> <!-- end about card -->
-
-  <!-- أعمال التصميم الإعلاني (existing style preserved) -->
   <div class="card">
-    <h3 class="section-title">أعمال التصميم الإعلاني</h3>
-    <div class="works">
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/150989889.png" alt="عمل 1"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/516060985.png" alt="عمل 2"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/897949365.jpg" alt="عمل 3"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/958474529.png" alt="عمل 4"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/676674290.jpg" alt="عمل 5"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/161186280.jpg" alt="عمل 6"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/677640302.jpg" alt="عمل 7"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/445348193.jpg" alt="عمل 8"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/227917876.jpg" alt="عمل 9"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/486232761.jpg" alt="عمل 10"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/919427492.jpg" alt="عمل 11"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/313847758.jpg" alt="عمل 12"></div>
-      <!-- + باقي الصور كما كانت -->
-    </div>
+    <h3>من أنا</h3>
+    <p>أنا أحمد محمد السلامي، مصمم ومشغل طباعة بخبرة تتجاوز خمس سنوات في التصميم، الطباعة، والتسويق الإلكتروني. عملت على تنفيذ تصاميم مخصصة، تجهيز ملفات الطباعة، وضبط إعدادات الإنتاج بدقة عالية، إضافةً إلى إدارة الحملات التسويقية وتحسين أداء المتاجر الإلكترونية.</p>
   </div>
 
-  <!-- أداء الحملات الإعلانية -->
-  <div class="card">
-    <h3 class="section-title">أداء الحملات الإعلانية</h3>
-    <div class="works">
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/770212450.jpg" alt="حملة 1"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/611077070.jpg" alt="حملة 2"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/463064977.jpg" alt="حملة 3"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/678904030.jpg" alt="حملة 4"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/517068052.jpg" alt="حملة 5"></div>
-    </div>
-  </div>
+  <!-- هنا سنبني الأقسام ديناميكيًا -->
+  <div id="dynamic-sections"></div>
 
-  <!-- الدورات والشهادات -->
-  <div class="card">
-    <h3 class="section-title">الدورات والشهادات</h3>
-    <div class="works">
-      <div class="work-item">
-        <a href="https://focus.snapchat.com/student/award/DAGaKxfLw9xghvJ6fbPW6erN" target="_blank">
-          <img src="https://www2.0zz0.com/2025/10/11/16/288560111.png" alt="Ads Manager Campaign Activation (MCA)">
-        </a>
-      </div>
-      <div class="work-item">
-        <a href="https://focus.snapchat.com/student/award/kNystyLCx7BBEo8Pu2S6Pz8w" target="_blank">
-          <img src="https://www2.0zz0.com/2025/10/11/17/759358589.png" alt="Dynamic Ads">
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Contact -->
   <div class="card" style="text-align:center;">
-    <h3 class="section-title">التواصل</h3>
-    <p style="color:var(--muted)">واتساب: <strong>+966509067209</strong></p>
-    <p style="color:var(--muted)">بريد إلكتروني: <strong><a href="mailto:ahmed.m.alslamy@gmail.com" style="color:var(--accent);">ahmed.m.alslamy@gmail.com</a></strong></p>
+    <h3>التواصل</h3>
+    <p>واتساب: <strong>+966509067209</strong></p>
+    <p>بريد إلكتروني: <strong>ahmed.m.alslamy@gmail.com</strong></p>
     <a class="btn" href="https://wa.me/966509067209?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%AD%D8%A8%20%D8%A3%D8%AA%D9%88%D8%A7%D8%B5%D9%84%20%D9%85%D8%B9%D9%83%D9%85">تواصل عبر واتساب</a>
   </div>
 
   <div class="footer">© 2025 أحمد السلامي</div>
 </div>
 
-<!-- lightbox -->
+<!-- Lightbox -->
 <div class="lightbox" id="lightbox">
   <button class="prev">&#10094;</button>
   <img src="" alt="صورة مكبرة">
   <button class="next">&#10095;</button>
 </div>
 
+<!-- بناء الأقسام من LocalStorage + لايت بوكس -->
 <script>
-/* Lightbox functionality (كما في النسخة الأصلية) */
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = lightbox.querySelector('img');
-const images = Array.from(document.querySelectorAll('.work-item img'));
-let currentIndex = 0;
+(function(){
+  const STORE_KEY = 'als_portfolio_v1';
+  const pretty = {
+    designs: 'أعمال التصميم الإعلاني',
+    campaigns: 'أداء الحملات الإعلانية',
+    certs: 'الدورات والشهادات'
+  };
 
-images.forEach((img,index)=>{
-  // إذا الصورة ضمن الروابط (الشهادات) تجاهل فتح لايت بوكس
-  img.addEventListener('click', (e)=>{
-    if(img.parentElement.tagName.toLowerCase() === 'a') return;
-    currentIndex = index;
-    lightboxImg.src = images[currentIndex].src;
-    lightbox.classList.add('show');
-  });
-});
+  function readStore(){
+    try{
+      const raw = localStorage.getItem(STORE_KEY);
+      if(!raw) return null;
+      const d = JSON.parse(raw);
+      if(d.sections) return d;
+      // ترحيل بنية قديمة إلى الجديدة (قراءة فقط)
+      return { sections: {
+        designs: d.designs || [],
+        campaigns: d.campaigns || [],
+        certs: d.certs || []
+      }};
+    }catch(e){ return null; }
+  }
 
-document.querySelectorAll('.lightbox .next')[0].addEventListener('click',(e)=>{
-  e.stopPropagation();
-  currentIndex = (currentIndex + 1) % images.length;
-  lightboxImg.src = images[currentIndex].src;
-});
-document.querySelectorAll('.lightbox .prev')[0].addEventListener('click',(e)=>{
-  e.stopPropagation();
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  lightboxImg.src = images[currentIndex].src;
-});
-lightbox.addEventListener('click', ()=>{
-  lightbox.classList.remove('show');
-});
+  function makeSectionCard(title){
+    const card = document.createElement('div');
+    card.className = 'card';
+    const h3 = document.createElement('h3');
+    h3.textContent = title;
+    const grid = document.createElement('div');
+    grid.className = 'works';
+    card.appendChild(h3);
+    card.appendChild(grid);
+    return { card, grid };
+  }
 
-/* Scroll reveal for mini-cards */
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('show');
-      observer.unobserve(entry.target);
-    }
-  });
-},{threshold:0.12});
+  function addItemsToGrid(items, grid, linkable=false){
+    items.forEach((it,i)=>{
+      const wrap = document.createElement('div');
+      wrap.className = 'work-item';
+      const img = document.createElement('img');
+      img.src = it.img; img.alt = it.caption || ('عنصر '+(i+1));
+      if(linkable && it.link){
+        const a = document.createElement('a');
+        a.href = it.link; a.target = '_blank'; a.rel = 'noopener';
+        a.appendChild(img); wrap.appendChild(a);
+      }else{
+        wrap.appendChild(img);
+      }
+      grid.appendChild(wrap);
+    });
+  }
 
-document.querySelectorAll('.mini-card').forEach(el => observer.observe(el));
+  function initLightbox(){
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    const imgs = Array.from(document.querySelectorAll('.work-item img'))
+      .filter(img => !(img.parentElement && img.parentElement.tagName.toLowerCase()==='a'));
+    if(!imgs.length) return;
+    let idx = 0;
+    imgs.forEach((img,i)=>{
+      img.addEventListener('click', ()=>{
+        idx = i; lightboxImg.src = imgs[idx].src; lightbox.classList.add('show');
+      });
+    });
+    lightbox.querySelector('.next').onclick = (e)=>{ e.stopPropagation(); idx=(idx+1)%imgs.length; lightboxImg.src=imgs[idx].src; };
+    lightbox.querySelector('.prev').onclick = (e)=>{ e.stopPropagation(); idx=(idx-1+imgs.length)%imgs.length; lightboxImg.src=imgs[idx].src; };
+    lightbox.onclick = ()=> lightbox.classList.remove('show');
+  }
 
-/* ensure works images list excludes certificates (anchors) when navigating lightbox */
-/* No further scripts required */
+  const data = readStore();
+  const mount = document.getElementById('dynamic-sections');
+  if(data && mount){
+    Object.entries(data.sections).forEach(([key, items])=>{
+      if(!items || !items.length) return; // تجاهل الأقسام الفارغة
+      const title = pretty[key] || key.replace(/_/g,' ');
+      const { card, grid } = makeSectionCard(title);
+      addItemsToGrid(items, grid, key==='certs');
+      mount.appendChild(card);
+    });
+  }
+
+  initLightbox();
+})();
 </script>
 </body>
 </html>
