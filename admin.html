@@ -10,7 +10,7 @@
 :root{--bg:#0f172a;--card:#0b1320;--card2:#1e293b;--text:#e2e8f0;--muted:#94a3b8;--accent:#06b6d4}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
-.wrap{max-width:960px;margin:auto;padding:24px}
+.wrap{max-width:960px;margin:auto;padding:24px;padding-bottom:92px} /* مساحة للشريط السفلي */
 .card{background:var(--card2);border:1px solid #334155;border-radius:18px;margin:16px 0;padding:16px}
 h1,h2,h3{margin:0 0 10px;color:var(--accent)}
 small{color:var(--muted)}
@@ -31,6 +31,19 @@ textarea{min-height:90px}
 .item .actions{display:flex;gap:6px;padding:10px}
 .note{font-size:13px;color:var(--muted)}
 .pin{display:flex;gap:10px;align-items:center}
+
+/* شريط حفظ لاصق أسفل الصفحة */
+.savebar{
+  position:fixed;inset-inline:0;bottom:0;
+  background:#0b1320;border-top:1px solid #334155;
+  display:flex;justify-content:center;gap:12px;align-items:center;
+  padding:12px; z-index:100;
+}
+.toast{
+  position:fixed;bottom:76px;left:50%;transform:translateX(-50%);
+  background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:10px;
+  padding:10px 14px;font-size:14px;display:none;z-index:101;
+}
 </style>
 </head>
 <body>
@@ -145,12 +158,16 @@ https://example.com/2.jpg"></textarea>
           </div>
         </div>
       </div>
-      <hr style="border:0;border-top:1px solid #334155;margin:14px 0">
-      <button class="btn danger" onclick="resetData()">حذف كل البيانات المحلية</button>
-      <small class="note">لا يحذف صور الإنترنت—يمسح LocalStorage فقط.</small>
     </div>
   </div>
 </div>
+
+<!-- شريط الحفظ السفلي -->
+<div class="savebar" id="savebar" style="display:none">
+  <button class="btn primary" onclick="saveAndBuild()">حفظ</button>
+  <button class="btn muted" onclick="previewIndex()">معاينة</button>
+</div>
+<div class="toast" id="toast">تم التوليد — تم تنزيل <b>index.html</b>. استبدل الملف في الريبو ليتحدث الموقع العام.</div>
 
 <script>
 /* === مفاتيح التخزين === */
@@ -163,11 +180,15 @@ function login(){
   if(!pin){ alert('أدخل PIN'); return; }
   localStorage.setItem(PIN_KEY,'1');
   document.getElementById('app').style.display='block';
+  document.getElementById('savebar').style.display='flex';
   updateQuota();
 }
 
 window.addEventListener('load',()=>{
-  if(localStorage.getItem(PIN_KEY)==='1'){ document.getElementById('app').style.display='block'; }
+  if(localStorage.getItem(PIN_KEY)==='1'){
+    document.getElementById('app').style.display='block';
+    document.getElementById('savebar').style.display='flex';
+  }
   ensureData();
   syncSectionOptions(getData());
   renderList();
@@ -316,6 +337,146 @@ function exportDataJson(){
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='data.json'; a.click();
 }
+
+/* === زر الحفظ: يولّد index.html + معاينة === */
+function saveAndBuild(){
+  const blob = buildIndexHtmlBlob();
+  // تنزيل index.html
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='index.html'; a.click();
+  // إشعار
+  showToast('تم توليد وتحميل <b>index.html</b> — ارفعه مكان الملف القديم.');
+  // فتح معاينة في تبويب جديد
+  window.open(URL.createObjectURL(blob), 'preview');
+}
+function previewIndex(){
+  const blob = buildIndexHtmlBlob();
+  window.open(URL.createObjectURL(blob), 'preview');
+  showToast('تم فتح معاينة الواجهة في تبويب جديد.');
+}
+function showToast(text){
+  const t=document.getElementById('toast'); t.innerHTML=text; t.style.display='block';
+  setTimeout(()=>{ t.style.display='none'; }, 3500);
+}
+
+/* يبني نسخة واجهة index.html من البيانات الحالية */
+function buildIndexHtmlBlob(){
+  const data = getData();
+  const safeJson = JSON.stringify(data, null, 2);
+  const html = `<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>أحمد السلامي — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--accent:#06b6d4}
+*{box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0;line-height:1.6;direction:rtl;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle at 75% 15%, rgba(6,182,212,.1) 0%, transparent 20%),
+             radial-gradient(circle at 25% 85%, rgba(6,182,212,.08) 0%, transparent 20%);
+  z-index:-1;animation:moveGradient 45s infinite alternate linear}
+@keyframes moveGradient{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(15%,15%) rotate(15deg)}}
+.container{max-width:800px;margin:auto;padding:15px}
+.card{background:var(--card);padding:15px;border-radius:16px;margin-bottom:20px;border:1px solid #334155}
+h1,h2,h3{margin-top:0;color:var(--accent)}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:8px 16px;border-radius:8px;text-decoration:none;font-weight:600;transition:background .3s}
+.btn:hover{background:#0891b2}
+.works{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px}
+.work-item{background:#0f172a;border-radius:12px;overflow:hidden;border:1px solid #334155;transition:.3s;cursor:pointer}
+.work-item:hover{transform:scale(1.03)}
+.work-item img{width:100%;height:100px;object-fit:cover;display:block}
+.footer{text-align:center;margin:30px 0 10px;color:#94a3b8;font-size:14px}
+.lightbox{display:none;position:fixed;z-index:999;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);justify-content:center;align-items:center}
+.lightbox img{max-width:90%;max-height:90%;border-radius:12px;box-shadow:0 0 25px rgba(0,0,0,.5)}
+.lightbox.show{display:flex}
+.lightbox button{position:absolute;top:50%;transform:translateY(-50%);font-size:35px;color:#fff;background:none;border:none;cursor:pointer;padding:10px;user-select:none}
+.lightbox .prev{left:15px}.lightbox .next{right:15px}
+@media (max-width:480px){.work-item img{height:80px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card" style="display:flex;align-items:center;gap:12px;">
+    <img src="https://i.ibb.co/0VWQv8F1/your-photo.jpg" alt="أحمد السلامي" style="width:70px;height:70px;border-radius:50%;object-fit:cover;">
+    <div>
+      <h2>أحمد محمد السلامي</h2>
+      <p>مصمم ومسوق إلكتروني بخبرة عملية في التصميم والطباعة وإدارة الحملات الإعلانية</p>
+      <p>صفحة شخصية — عرض أعمال ووسائل التواصل</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>من أنا</h3>
+    <p>أنا أحمد محمد السلامي، مصمم ومشغل طباعة بخبرة تتجاوز خمس سنوات في التصميم، الطباعة، والتسويق الإلكتروني. عملت على تنفيذ تصاميم مخصصة، تجهيز ملفات الطباعة، وضبط إعدادات الإنتاج بدقة عالية، إضافةً إلى إدارة الحملات التسويقية وتحسين أداء المتاجر الإلكترونية.</p>
+  </div>
+
+  <div id="dynamic-sections"></div>
+
+  <div class="card" style="text-align:center;">
+    <h3>التواصل</h3>
+    <p>واتساب: <strong>+966509067209</strong></p>
+    <p>بريد إلكتروني: <strong>ahmed.m.alslamy@gmail.com</strong></p>
+    <a class="btn" href="https://wa.me/966509067209?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85">تواصل عبر واتساب</a>
+  </div>
+
+  <div class="footer">© 2025 أحمد السلامي</div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="prev">&#10094;</button>
+  <img src="" alt="صورة مكبرة">
+  <button class="next">&#10095;</button>
+</div>
+
+<script>
+const portfolioData = ${safeJson};
+(function(){
+  const pretty = { designs:'أعمال التصميم الإعلاني', campaigns:'أداء الحملات الإعلانية', certs:'الدورات والشهادات' };
+  const mount = document.getElementById('dynamic-sections');
+  const data = (portfolioData && portfolioData.sections) ? portfolioData : { sections:{} };
+
+  function card(title){
+    const c=document.createElement('div'); c.className='card';
+    const h=document.createElement('h3'); h.textContent=title;
+    const g=document.createElement('div'); g.className='works';
+    c.appendChild(h); c.appendChild(g); return {c,g};
+  }
+  function add(items,g,linkable=false){
+    items.forEach((it,i)=>{
+      const w=document.createElement('div'); w.className='work-item';
+      const img=document.createElement('img'); img.src=it.img; img.alt=it.caption||('عنصر '+(i+1));
+      if(linkable && it.link){ const a=document.createElement('a'); a.href=it.link; a.target='_blank'; a.rel='noopener'; a.appendChild(img); w.appendChild(a); }
+      else { w.appendChild(img); }
+      g.appendChild(w);
+    });
+  }
+  Object.entries(data.sections).forEach(([k,items])=>{
+    if(!items || !items.length) return;
+    const title = pretty[k] || k.replace(/_/g,' ');
+    const {c,g} = card(title); add(items,g,k==='certs'); mount.appendChild(c);
+  });
+
+  const lightbox=document.getElementById('lightbox');
+  const lightboxImg=lightbox.querySelector('img');
+  const imgs=Array.from(document.querySelectorAll('.work-item img')).filter(img => !(img.parentElement && img.parentElement.tagName.toLowerCase()==='a'));
+  if(imgs.length){
+    let idx=0;
+    imgs.forEach((img,i)=> img.addEventListener('click', ()=>{ idx=i; lightboxImg.src=imgs[idx].src; lightbox.classList.add('show'); }));
+    lightbox.querySelector('.next').onclick = e=>{ e.stopPropagation(); idx=(idx+1)%imgs.length; lightboxImg.src=imgs[idx].src; };
+    lightbox.querySelector('.prev').onclick = e=>{ e.stopPropagation(); idx=(idx-1+imgs.length)%imgs.length; lightboxImg.src=imgs[idx].src; };
+    lightbox.onclick = ()=> lightbox.classList.remove('show');
+  }
+})();
+</script>
+</body>
+</html>`;
+  return new Blob([html],{type:'text/html;charset=utf-8'});
+}
+
+/* === استيراد البيانات === */
 function importData(){
   const f=document.getElementById('importFile').files[0]; if(!f) return alert('اختر ملف JSON');
   const r=new FileReader();
