@@ -7,59 +7,258 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap">
 <style>
-:root{color-scheme:dark;--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--accent:#06b6d4}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0;line-height:1.6;direction:rtl}
-.container{max-width:800px;margin:auto;padding:15px}
-.card{background:var(--card);padding:15px;border-radius:16px;margin-bottom:20px}
-h3{color:var(--accent);margin-top:0}
-.works{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px}
-.work-item{background:#0f172a;border-radius:12px;overflow:hidden;border:1px solid #334155;transition:.3s;cursor:pointer}
-.work-item:hover{transform:scale(1.03)}
-.work-item img{width:100%;height:100px;object-fit:cover}
-.lightbox{display:none;position:fixed;z-index:999;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);justify-content:center;align-items:center}
-.lightbox.show{display:flex}
-.lightbox img{max-width:90%;max-height:90%;border-radius:12px}
-.footer{text-align:center;margin:30px 0;color:#94a3b8;font-size:14px}
+:root{
+  color-scheme: dark;
+  --bg:#0f172a;
+  --card:#1e293b;
+  --text:#e2e8f0;
+  --accent:#06b6d4;
+}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  margin:0;
+  padding:0;
+  line-height:1.6;
+  direction:rtl;
+  position: relative;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 75% 15%, rgba(6, 182, 212, 0.1) 0%, transparent 20%),
+              radial-gradient(circle at 25% 85%, rgba(6, 182, 212, 0.08) 0%, transparent 20%);
+  z-index: -1;
+  animation: moveGradient 45s infinite alternate linear;
+}
+@keyframes moveGradient {
+  0% { transform: translate(0,0) rotate(0deg); }
+  100% { transform: translate(15%,15%) rotate(15deg); }
+}
+.container{
+  max-width:800px;
+  margin:auto;
+  padding:15px;
+}
+.card{
+  background:var(--card);
+  padding:15px;
+  border-radius:16px;
+  margin-bottom:20px;
+}
+h1,h2,h3{margin-top:0;color:var(--accent);}
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  padding:8px 16px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:600;
+  transition:background .3s;
+}
+.btn:hover{background:#0891b2;}
+.works{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
+  gap:10px;
+}
+.work-item{
+  background:#0f172a;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid #334155;
+  transition:.3s;
+  cursor:pointer;
+}
+.work-item:hover{transform:scale(1.03);}
+.work-item img{
+  width:100%;
+  height:100px;
+  object-fit:cover;
+  display:block;
+}
+.footer{text-align:center;margin:30px 0 10px;color:#94a3b8;font-size:14px;}
+.lightbox{
+  display:none;
+  position:fixed;
+  z-index:999;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+}
+.lightbox img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+  box-shadow:0 0 25px rgba(0,0,0,0.5);
+}
+.lightbox.show{display:flex;}
+.lightbox button{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:35px;
+  color:white;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:10px;
+  user-select:none;
+}
+.lightbox .prev{left:15px;}
+.lightbox .next{right:15px;}
+@media (max-width:480px){
+  .work-item img{height:80px;}
+}
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card" style="text-align:center">
-    <h2>أحمد محمد السلامي</h2>
-    <p>مصمم ومسوق إلكتروني — عرض أعمالي وشهاداتي</p>
+  <div class="card" style="display:flex;align-items:center;gap:12px;">
+    <img src="https://c.top4top.io/p_3614h62gb1.png" alt="أحمد السلامي" style="width:70px;height:70px;border-radius:50%;object-fit:cover;">
+    <div>
+      <h2>أحمد محمد السلامي</h2>
+      <p>مصمم ومسوق إلكتروني بخبرة عملية في التصميم والطباعة وإدارة الحملات الإعلانية</p>
+      <p>صفحة شخصية — عرض أعمال ووسائل التواصل</p>
+    </div>
   </div>
-  <div id="dynamic-sections"></div>
+
+  <div class="card">
+    <h3>من أنا</h3>
+    <p>أنا أحمد محمد السلامي، مصمم ومشغل طباعة بخبرة تتجاوز خمس سنوات في التصميم، الطباعة، والتسويق الإلكتروني. عملت على تنفيذ تصاميم مخصصة، تجهيز ملفات الطباعة، وضبط إعدادات الإنتاج بدقة عالية، إضافةً إلى إدارة الحملات التسويقية وتحسين أداء المتاجر الإلكترونية.</p>
+  </div>
+
+  <div class="card">
+    <h3>أعمال التصميم الإعلاني</h3>
+    <div class="works">
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/150989889.png" alt="عمل 1"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/516060985.png" alt="عمل 2"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/897949365.jpg" alt="عمل 3"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/958474529.png" alt="عمل 4"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/676674290.jpg" alt="عمل 5"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/161186280.jpg" alt="عمل 6"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/677640302.jpg" alt="عمل 7"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/445348193.jpg" alt="عمل 8"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/227917876.jpg" alt="عمل 9"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/486232761.jpg" alt="عمل 10"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/919427492.jpg" alt="عمل 11"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/313847758.jpg" alt="عمل 12"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/165424954.jpg" alt="عمل 13"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/707470323.jpg" alt="عمل 14"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/671461575.jpg" alt="عمل 15"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/501569540.jpg" alt="عمل 16"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/324125662.jpg" alt="عمل 17"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/608042838.jpg" alt="عمل 18"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/478768167.jpg" alt="عمل 19"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/844475424.jpg" alt="عمل 20"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/555208759.jpg" alt="عمل 21"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/493984826.jpg" alt="عمل 22"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/136128293.jpg" alt="عمل 23"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/588394631.png" alt="عمل 24"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/654231919.jpg" alt="عمل 25"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/183279854.png" alt="عمل 26"></div>
+      <!-- الصور الجديدة -->
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/967083094.jpg" alt="عمل 27"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/497274254.jpg" alt="عمل 28"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/108767714.jpg" alt="عمل 29"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/948629507.jpg" alt="عمل 30"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/266920453.jpg" alt="عمل 31"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/746968949.jpg" alt="عمل 32"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/11/01/18/264030504.jpg" alt="عمل 33"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/11/01/18/968487262.jpg" alt="عمل 34"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>أداء الحملات الإعلانية</h3>
+    <div class="works">
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/770212450.jpg" alt="حملة 1"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/611077070.jpg" alt="حملة 2"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/463064977.jpg" alt="حملة 3"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/678904030.jpg" alt="حملة 4"></div>
+      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/517068052.jpg" alt="حملة 5"></div>
+      <div class="work-item"><img src="https://up6.cc/2025/10/176332259666921.png" alt="حملة 6"></div>
+      <div class="work-item"><img src="https://up6.cc/2025/10/176340042938121.png" alt="حملة 7"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>الدورات والشهادات</h3>
+    <div class="works">
+      <div class="work-item">
+        <a href="https://focus.snapchat.com/student/award/DAGaKxfLw9xghvJ6fbPW6erN" target="_blank">
+          <img src="https://www2.0zz0.com/2025/10/11/16/288560111.png" alt="Ads Manager Campaign Activation (MCA)">
+        </a>
+      </div>
+      <div class="work-item">
+        <a href="https://focus.snapchat.com/student/award/kNystyLCx7BBEo8Pu2S6Pz8w" target="_blank">
+          <img src="https://www2.0zz0.com/2025/10/11/17/759358589.png" alt="Dynamic Ads">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <h3>التواصل</h3>
+    <p>واتساب: <strong>+966509067209</strong></p>
+    <p>بريد إلكتروني: <strong>ahmed.m.alslamy@gmail.com</strong></p>
+    <a class="btn" href="https://wa.me/966509067209?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%AD%D8%A8%20%D8%A3%D8%AA%D9%88%D8%A7%D8%B5%D9%84%20%D9%85%D8%B9%D9%83%D9%85">تواصل عبر واتساب</a>
+  </div>
+
   <div class="footer">© 2025 أحمد السلامي</div>
 </div>
+
 <div class="lightbox" id="lightbox">
   <button class="prev">&#10094;</button>
   <img src="" alt="صورة مكبرة">
   <button class="next">&#10095;</button>
 </div>
+
 <script>
-(function(){
-const STORE_KEY='als_portfolio_v1';const DATA_URL='data.json?v='+Date.now();
-const pretty={designs:'أعمال التصميم الإعلاني',campaigns:'أداء الحملات الإعلانية',certs:'الدورات والشهادات'};
-function readLocal(){try{const raw=localStorage.getItem(STORE_KEY);if(!raw)return null;
-const d=JSON.parse(raw);if(d.sections)return d;return{sections:{designs:d.designs||[],campaigns:d.campaigns||[],certs:d.certs||[]}};}catch(e){return null;}}
-function makeSectionCard(title){const card=document.createElement('div');card.className='card';
-const h3=document.createElement('h3');h3.textContent=title;
-const grid=document.createElement('div');grid.className='works';
-card.appendChild(h3);card.appendChild(grid);return{card,grid};}
-function addItemsToGrid(items,grid,linkable=false){items.forEach((it,i)=>{const wrap=document.createElement('div');wrap.className='work-item';
-const img=document.createElement('img');img.src=it.img;img.alt=it.caption||('عنصر '+(i+1));
-if(linkable&&it.link){const a=document.createElement('a');a.href=it.link;a.target='_blank';a.appendChild(img);wrap.appendChild(a);}else{wrap.appendChild(img);}grid.appendChild(wrap);});}
-function initLightbox(){const lightbox=document.getElementById('lightbox');const imgs=Array.from(document.querySelectorAll('.work-item img')).filter(img=>!(img.parentElement&&img.parentElement.tagName.toLowerCase()==='a'));
-const lightboxImg=lightbox.querySelector('img');let idx=0;imgs.forEach((img,i)=>img.addEventListener('click',()=>{idx=i;lightboxImg.src=imgs[idx].src;lightbox.classList.add('show');}));
-lightbox.querySelector('.next').onclick=e=>{e.stopPropagation();idx=(idx+1)%imgs.length;lightboxImg.src=imgs[idx].src;};
-lightbox.querySelector('.prev').onclick=e=>{e.stopPropagation();idx=(idx-1+imgs.length)%imgs.length;lightboxImg.src=imgs[idx].src;};
-lightbox.onclick=()=>lightbox.classList.remove('show');}
-async function load(){const mount=document.getElementById('dynamic-sections');let data=null;
-try{const res=await fetch(DATA_URL,{cache:'no-store'});if(res.ok){data=await res.json();if(!data.sections)throw Error();}}catch(_){}
-if(!data)data=readLocal();if(!data||!data.sections)return;
-Object.entries(data.sections).forEach(([key,items])=>{if(!items||!items.length)return;
-const title=pretty[key]||key.replace(/_/g,' ');const{card,grid}=makeSectionCard(title);
-addItemsToGrid(items,grid,key==='certs');mount.appendChild(card);});initLightbox();}
-load();})();
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = lightbox.querySelector('img');
+
+// جمع الصور: صورة البروفايل + كل الصور داخل .work-item
+let images = Array.from(document.querySelectorAll('.card > img, .work-item img'));
+
+// استبعاد الصور داخل الروابط (الشهادات)
+images = images.filter(img => !img.closest('a'));
+
+let currentIndex = 0;
+
+images.forEach((img, index) => {
+  img.style.cursor = "pointer";
+  img.addEventListener('click', () => {
+    currentIndex = index;
+    lightboxImg.src = images[currentIndex].src;
+    lightbox.classList.add('show');
+  });
+});
+
+lightbox.querySelector('.next').addEventListener('click', (e) => {
+  e.stopPropagation();
+  currentIndex = (currentIndex + 1) % images.length;
+  lightboxImg.src = images[currentIndex].src;
+});
+
+lightbox.querySelector('.prev').addEventListener('click', (e) => {
+  e.stopPropagation();
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  lightboxImg.src = images[currentIndex].src;
+});
+
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('show');
+});
 </script>
-</body></html>
+</body>
+</html>
