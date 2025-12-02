@@ -1,264 +1,400 @@
 <!doctype html>
 <html lang="ar">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>أحمد السلامي — Portfolio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap">
-<style>
-:root{
-  color-scheme: dark;
-  --bg:#0f172a;
-  --card:#1e293b;
-  --text:#e2e8f0;
-  --accent:#06b6d4;
-}
-body{
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  margin:0;
-  padding:0;
-  line-height:1.6;
-  direction:rtl;
-  position: relative;
-  overflow-x: hidden;
-}
-body::before {
-  content: "";
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at 75% 15%, rgba(6, 182, 212, 0.1) 0%, transparent 20%),
-              radial-gradient(circle at 25% 85%, rgba(6, 182, 212, 0.08) 0%, transparent 20%);
-  z-index: -1;
-  animation: moveGradient 45s infinite alternate linear;
-}
-@keyframes moveGradient {
-  0% { transform: translate(0,0) rotate(0deg); }
-  100% { transform: translate(15%,15%) rotate(15deg); }
-}
-.container{
-  max-width:800px;
-  margin:auto;
-  padding:15px;
-}
-.card{
-  background:var(--card);
-  padding:15px;
-  border-radius:16px;
-  margin-bottom:20px;
-}
-h1,h2,h3{margin-top:0;color:var(--accent);}
-.btn{
-  display:inline-block;
-  background:var(--accent);
-  color:#fff;
-  padding:8px 16px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:600;
-  transition:background .3s;
-}
-.btn:hover{background:#0891b2;}
-.works{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
-  gap:10px;
-}
-.work-item{
-  background:#0f172a;
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid #334155;
-  transition:.3s;
-  cursor:pointer;
-}
-.work-item:hover{transform:scale(1.03);}
-.work-item img{
-  width:100%;
-  height:100px;
-  object-fit:cover;
-  display:block;
-}
-.footer{text-align:center;margin:30px 0 10px;color:#94a3b8;font-size:14px;}
-.lightbox{
-  display:none;
-  position:fixed;
-  z-index:999;
-  top:0;left:0;
-  width:100%;height:100%;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-}
-.lightbox img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
-  box-shadow:0 0 25px rgba(0,0,0,0.5);
-}
-.lightbox.show{display:flex;}
-.lightbox button{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:35px;
-  color:white;
-  background:none;
-  border:none;
-  cursor:pointer;
-  padding:10px;
-  user-select:none;
-}
-.lightbox .prev{left:15px;}
-.lightbox .next{right:15px;}
-@media (max-width:480px){
-  .work-item img{height:80px;}
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>قوة المحتوى الممتاز في رفع أداء الحملات — أحمد السلامي</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Tajawal:wght@400;500;700&display=swap">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #020617;
+      --card: #020617;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #06b6d4;
+      --accent-soft: rgba(6, 182, 212, 0.15);
+      --radius-xl: 18px;
+      --radius-2xl: 24px;
+      --shadow-soft: 0 20px 60px rgba(15, 23, 42, 0.75);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Tajawal', system-ui, sans-serif;
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 45%, #000 100%);
+      color: var(--text);
+      direction: rtl;
+      text-align: right;
+    }
+
+    body::before {
+      content:"";
+      position: fixed;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(56,189,248,0.07), transparent 60%),
+        radial-gradient(circle at 90% 20%, rgba(96,165,250,0.08), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(6,182,212,0.08), transparent 60%);
+      z-index:-1;
+    }
+
+    .page { max-width:1080px; margin:0 auto; padding:32px 18px 40px; }
+    header { display:flex; justify-content:space-between; gap:16px; margin-bottom:28px; }
+
+    .brand { display:flex; align-items:center; gap:12px; }
+    .avatar {
+      width:44px;height:44px;border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
+      background:radial-gradient(circle at 30% 0,#1e293b,#020617 70%);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;font-size:18px;
+    }
+
+    .brand-text { display:flex; flex-direction:column; gap:2px; }
+
+    .chip {
+      border-radius:999px; padding:6px 14px;
+      border:1px solid rgba(148,163,184,0.45);
+      background:rgba(15,23,42,0.5);
+      backdrop-filter:blur(8px);
+      font-size:12px; color:var(--muted);
+      display:flex; align-items:center; gap:8px;
+    }
+
+    .chip-dot {
+      width:7px;height:7px;border-radius:999px;
+      background:#22c55e;
+      box-shadow:0 0 0 6px rgba(34,197,94,0.35);
+    }
+
+    main {
+      display:grid;
+      grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+      gap:22px;
+      margin-bottom:26px;
+    }
+
+    @media(max-width:840px){
+      main { grid-template-columns:1fr; }
+      header { flex-direction:column; align-items:flex-start; }
+    }
+
+    .card {
+      background:rgba(15,23,42,0.95);
+      border-radius:var(--radius-2xl);
+      border:1px solid rgba(148,163,184,0.4);
+      box-shadow:var(--shadow-soft);
+      padding:22px 20px 20px;
+      margin-bottom:16px;
+    }
+
+    h1 { font-size:26px; margin:0 0 10px; }
+    h1 span { color:var(--accent); }
+
+    .hero-sub { color:var(--muted); font-size:14px; margin-bottom:16px; }
+    .hero-sub strong { color:var(--text); }
+
+    .hero-sub-english {
+      font-family:'Inter'; font-size:12px;
+      color:var(--muted); opacity:0.95; margin-bottom:16px;
+    }
+
+    .hero-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+    .hero-tag {
+      padding:5px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
+      background:rgba(15,23,42,0.6);
+      font-size:11px;color:var(--muted);
+    }
+
+    .btn-primary, .btn-ghost {
+      border-radius:999px; padding:8px 18px;
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; cursor:pointer; font-size:13px;
+    }
+
+    .btn-primary {
+      background:radial-gradient(circle at top left,var(--accent),#22d3ee);
+      color:#0f172a; box-shadow:0 12px 30px rgba(8,47,73,0.9);
+    }
+
+    .btn-ghost {
+      background:rgba(15,23,42,0.9);
+      color:var(--muted);
+      border:1px solid rgba(148,163,184,0.45);
+    }
+
+    .section-title {
+      font-size:13px;font-weight:600;margin-bottom:10px;
+      color:var(--muted); letter-spacing:0.14em;
+      text-transform:uppercase;
+    }
+
+    .timeline { display:flex; flex-direction:column; gap:10px; }
+    .timeline-step {
+      border:1px solid rgba(51,65,85,0.8);
+      border-radius:14px;
+      padding:10px 12px;
+      background:rgba(15,23,42,0.95);
+    }
+
+    .timeline-header { display:flex; justify-content:space-between; margin-bottom:4px; }
+    .timeline-label { font-size:12px;color:var(--accent); }
+    .timeline-metric { color:#fbbf24; font-family:'Inter'; }
+
+    .pill-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+    .pill-row span {
+      padding:4px 9px; border-radius:999px;
+      border:1px solid rgba(30,64,175,0.9);
+      background:rgba(15,23,42,0.9);
+      font-size:11px;color:var(--muted);
+    }
+
+    .results-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px; margin-top:10px;
+    }
+
+    @media(max-width:720px){ .results-grid{grid-template-columns:repeat(2,1fr);} }
+    @media(max-width:520px){ .results-grid{grid-template-columns:1fr;} }
+
+    .result-item { border:1px solid rgba(30,64,175,0.8); border-radius:14px; overflow:hidden; }
+    .result-item img { width:100%;height:auto; }
+
+    .result-caption { padding:6px 8px; font-size:11px; color:var(--muted); }
+
+    .form-grid {
+      display:grid; grid-template-columns:repeat(2,1fr);
+      gap:10px; margin-bottom:10px;
+    }
+
+    @media(max-width:640px){ .form-grid{grid-template-columns:1fr;} }
+
+    .field { display:flex; flex-direction:column; gap:4px; }
+    .field-label { font-size:12px;color:var(--muted); }
+    .field-label span { color:#f97316; }
+
+    .field-input, .field-textarea {
+      padding:8px 10px; border-radius:12px;
+      border:1px solid rgba(51,65,85,0.9);
+      background:rgba(15,23,42,0.98);
+      color:var(--text);
+    }
+
+    .btn-submit {
+      border-radius:999px;
+      padding:9px 20px;
+      background:radial-gradient(circle at top left,var(--accent),#22d3ee);
+      color:#0f172a; border:none; cursor:pointer;
+    }
+
+    footer {
+      margin-top:20px; padding-top:12px;
+      border-top:1px dashed rgba(51,65,85,0.9);
+      font-size:11px; color:var(--muted);
+      display:flex; justify-content:space-between;
+      flex-wrap:wrap; gap:10px;
+    }
+
+    footer a { color:#38bdf8; text-decoration:none; }
+  </style>
 </head>
+
 <body>
-<div class="container">
-  <div class="card" style="display:flex;align-items:center;gap:12px;">
-    <img src="https://c.top4top.io/p_3614h62gb1.png" alt="أحمد السلامي" style="width:70px;height:70px;border-radius:50%;object-fit:cover;">
-    <div>
-      <h2>أحمد محمد السلامي</h2>
-      <p>مصمم ومسوق إلكتروني بخبرة عملية في التصميم والطباعة وإدارة الحملات الإعلانية</p>
-      <p>صفحة شخصية — عرض أعمال ووسائل التواصل</p>
-    </div>
-  </div>
+  <div class="page">
 
-  <div class="card">
-    <h3>من أنا</h3>
-    <p>أنا أحمد محمد السلامي، مصمم ومشغل طباعة بخبرة تتجاوز خمس سنوات في التصميم، الطباعة، والتسويق الإلكتروني. عملت على تنفيذ تصاميم مخصصة، تجهيز ملفات الطباعة، وضبط إعدادات الإنتاج بدقة عالية، إضافةً إلى إدارة الحملات التسويقية وتحسين أداء المتاجر الإلكترونية.</p>
-  </div>
-
-  <div class="card">
-    <h3>أعمال التصميم الإعلاني</h3>
-    <div class="works">
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/150989889.png" alt="عمل 1"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/516060985.png" alt="عمل 2"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/897949365.jpg" alt="عمل 3"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/958474529.png" alt="عمل 4"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/676674290.jpg" alt="عمل 5"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/161186280.jpg" alt="عمل 6"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/07/677640302.jpg" alt="عمل 7"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/445348193.jpg" alt="عمل 8"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/227917876.jpg" alt="عمل 9"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/486232761.jpg" alt="عمل 10"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/919427492.jpg" alt="عمل 11"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/313847758.jpg" alt="عمل 12"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/165424954.jpg" alt="عمل 13"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/707470323.jpg" alt="عمل 14"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/671461575.jpg" alt="عمل 15"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/501569540.jpg" alt="عمل 16"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/324125662.jpg" alt="عمل 17"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/608042838.jpg" alt="عمل 18"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/478768167.jpg" alt="عمل 19"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/844475424.jpg" alt="عمل 20"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/555208759.jpg" alt="عمل 21"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/493984826.jpg" alt="عمل 22"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/136128293.jpg" alt="عمل 23"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/588394631.png" alt="عمل 24"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/654231919.jpg" alt="عمل 25"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/183279854.png" alt="عمل 26"></div>
-      <!-- الصور الجديدة -->
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/967083094.jpg" alt="عمل 27"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/497274254.jpg" alt="عمل 28"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/108767714.jpg" alt="عمل 29"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/948629507.jpg" alt="عمل 30"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/266920453.jpg" alt="عمل 31"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/17/746968949.jpg" alt="عمل 32"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/11/01/18/264030504.jpg" alt="عمل 33"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/11/01/18/968487262.jpg" alt="عمل 34"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>أداء الحملات الإعلانية</h3>
-    <div class="works">
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/770212450.jpg" alt="حملة 1"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/611077070.jpg" alt="حملة 2"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/463064977.jpg" alt="حملة 3"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/678904030.jpg" alt="حملة 4"></div>
-      <div class="work-item"><img src="https://www2.0zz0.com/2025/10/11/08/517068052.jpg" alt="حملة 5"></div>
-      <div class="work-item"><img src="https://up6.cc/2025/10/176332259666921.png" alt="حملة 6"></div>
-      <div class="work-item"><img src="https://up6.cc/2025/10/176340042938121.png" alt="حملة 7"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>الدورات والشهادات</h3>
-    <div class="works">
-      <div class="work-item">
-        <a href="https://focus.snapchat.com/student/award/DAGaKxfLw9xghvJ6fbPW6erN" target="_blank">
-          <img src="https://www2.0zz0.com/2025/10/11/16/288560111.png" alt="Ads Manager Campaign Activation (MCA)">
-        </a>
+    <header>
+      <div class="brand">
+        <div class="avatar">A</div>
+        <div class="brand-text">
+          <span>AHMED AL-SALAMY</span>
+          <span>TikTok • Snapchat • Instagram Ads</span>
+        </div>
       </div>
-      <div class="work-item">
-        <a href="https://focus.snapchat.com/student/award/kNystyLCx7BBEo8Pu2S6Pz8w" target="_blank">
-          <img src="https://www2.0zz0.com/2025/10/11/17/759358589.png" alt="Dynamic Ads">
-        </a>
+
+      <div class="chip">
+        <span class="chip-dot"></span>
+        أعمل فقط على تيك توك • سناب شات • إنستقرام
       </div>
-    </div>
+    </header>
+
+    <main>
+      <!-- العمود الأيسر -->
+      <section>
+        <div class="card">
+          <h1>المحتوى <span>الممتاز</span> هو سرّ رفع الأداء</h1>
+
+          <p class="hero-sub">
+            أغلب الحملات تشتغل يومين وتطيح.  
+            السبب؟ المحتوى ضعيف وما يعطي الخوارزميات مادة تشتغل عليها.
+          </p>
+
+          <p class="hero-sub">
+            لما يكون المحتوى ممتاز + الاختبارات صحيحة + متابعة مستمرة:  
+            <strong>الـ ROAS يصعد تدريجيًا خلال ٣ شهور ويتجاوز 3x.</strong>
+          </p>
+
+          <p class="hero-sub-english">
+            I focus only on: TikTok • Snapchat • Instagram  
+            Because that’s where the attention AND conversions are.
+          </p>
+
+          <div class="hero-tags">
+            <span class="hero-tag">TikTok Ads</span>
+            <span class="hero-tag">Snapchat Ads</span>
+            <span class="hero-tag">Instagram Ads</span>
+            <span class="hero-tag">ROAS Scaling</span>
+          </div>
+
+          <a class="btn-primary" href="#contact">ابدأ مراجعة المحتوى</a>
+          <a class="btn-ghost" href="https://wa.me/966500000000">تواصل واتساب</a>
+        </div>
+
+        <div class="card">
+          <div class="section-title">أهمية المنصات الثلاث اليوم</div>
+
+          <p class="hero-sub">
+            الثلاث منصات تعطي أسرع نتائج لو المحتوى مضبوط:
+          </p>
+
+          <ul style="color:var(--muted); font-size:14px; line-height:1.7;">
+            <li><strong>تيك توك:</strong> أقوى منصة جذب وAttention اليوم.</li>
+            <li><strong>سناب شات:</strong> الأفضل للوصول اليومي السريع في السعودية.</li>
+            <li><strong>إنستقرام:</strong> منصة الذوق العالي + قرار الشراء القوي.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="section-title">خطة ٣ شهور لرفع ROAS</div>
+
+          <div class="timeline">
+            <div class="timeline-step">
+              <div class="timeline-header">
+                <span class="timeline-label">الشهر الأول</span>
+                <span class="timeline-metric">ROAS: 1.2x – 1.8x</span>
+              </div>
+              <strong>اختبار محتوى وزوايا مختلفة</strong>
+              نبحث عن "الكرييتف الفائز" عبر اختبار هوكس – زوايا تصوير – عروض مختلفة.
+            </div>
+
+            <div class="timeline-step">
+              <div class="timeline-header">
+                <span class="timeline-label">الشهر الثاني</span>
+                <span class="timeline-metric">ROAS: 2.0x – 2.7x</span>
+              </div>
+              <strong>تنظيف + تضخيم الجيد</strong>
+              نوقف الضعيف ونركّز الميزانية على التركيبات الأقوى.
+            </div>
+
+            <div class="timeline-step">
+              <div class="timeline-header">
+                <span class="timeline-label">الشهر الثالث</span>
+                <span class="timeline-metric">ROAS: 3x+</span>
+              </div>
+              <strong>تثبيت الفائزين وتوسيع الميزانية</strong>
+              هنا يبدأ النمو الحقيقي — الإعلان يتحول من مصروف إلى أصل.
+            </div>
+          </div>
+
+          <p class="hero-sub">
+            <strong>ملاحظة مهمة عن الميزانية:</strong>  
+            لتبان النتائج بسرعة، لازم ميزانية تسمح للمنصة تجمع بيانات كافية.  
+            الميزانيات القليلة جدًا تطوّل مرحلة التعلّم وتخلي الأرقام غير مستقرة.  
+            أما الميزانية المناسبة = نتائج أسرع + اختبارات أعمق + ROAS أفضل.
+          </p>
+        </div>
+      </section>
+
+      <!-- العمود الأيمن -->
+      <section>
+
+        <div class="card">
+          <div class="section-title">نماذج نتائج (صور)</div>
+
+          <div class="results-grid">
+            <div class="result-item">
+              <img src="results-1.jpg">
+              <div class="result-caption">قبل تحسين المحتوى</div>
+            </div>
+            <div class="result-item">
+              <img src="results-2.jpg">
+              <div class="result-caption">بعد تحسين الشهر الثاني</div>
+            </div>
+            <div class="result-item">
+              <img src="results-3.jpg">
+              <div class="result-caption">بعد ٣ شهور — ROAS 3x+</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="contact">
+          <div class="section-title">طلب تواصل</div>
+
+          <p class="hero-sub">املأ البيانات وسيُفتح إيميل جاهز يحتوي معلوماتك.</p>
+
+          <form onsubmit="handleSubmit(event)">
+            <div class="form-grid">
+              <div class="field">
+                <label class="field-label">الاسم <span>*</span></label>
+                <input class="field-input" id="name" required>
+              </div>
+
+              <div class="field">
+                <label class="field-label">رقم الجوال <span>*</span></label>
+                <input class="field-input" id="phone" required>
+              </div>
+
+              <div class="field">
+                <label class="field-label">الإيميل <span>*</span></label>
+                <input class="field-input" id="email" type="email" required>
+              </div>
+
+              <div class="field">
+                <label class="field-label">ملاحظات (اختياري)</label>
+                <textarea class="field-textarea" id="notes"></textarea>
+              </div>
+            </div>
+
+            <button class="btn-submit" type="submit">إرسال</button>
+          </form>
+        </div>
+
+      </section>
+    </main>
+
+    <footer>
+      <span>© <span id="year"></span> أحمد السلامي</span>
+      <a href="mailto:Ahmed.m.alslamy@gmail.com">Ahmed.m.alslamy@gmail.com</a>
+    </footer>
+
   </div>
-
-  <div class="card" style="text-align:center;">
-    <h3>التواصل</h3>
-    <p>واتساب: <strong>+966509067209</strong></p>
-    <p>بريد إلكتروني: <strong>ahmed.m.alslamy@gmail.com</strong></p>
-    <a class="btn" href="https://wa.me/966509067209?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%AD%D8%A8%20%D8%A3%D8%AA%D9%88%D8%A7%D8%B5%D9%84%20%D9%85%D8%B9%D9%83%D9%85">تواصل عبر واتساب</a>
-  </div>
-
-  <div class="footer">© 2025 أحمد السلامي</div>
-</div>
-
-<div class="lightbox" id="lightbox">
-  <button class="prev">&#10094;</button>
-  <img src="" alt="صورة مكبرة">
-  <button class="next">&#10095;</button>
-</div>
 
 <script>
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = lightbox.querySelector('img');
+document.getElementById('year').textContent = new Date().getFullYear();
 
-// جمع الصور: صورة البروفايل + كل الصور داخل .work-item
-let images = Array.from(document.querySelectorAll('.card > img, .work-item img'));
+function handleSubmit(e){
+  e.preventDefault();
+  const n = document.getElementById('name').value;
+  const p = document.getElementById('phone').value;
+  const m = document.getElementById('email').value;
+  const no = document.getElementById('notes').value || '(بدون ملاحظات)';
+  
+  const body = encodeURIComponent(
+    `الاسم: ${n}\nالجوال: ${p}\nالإيميل: ${m}\n\nملاحظات:\n${no}\n\n— تمت من صفحة نتائج الحملات`
+  );
 
-// استبعاد الصور داخل الروابط (الشهادات)
-images = images.filter(img => !img.closest('a'));
-
-let currentIndex = 0;
-
-images.forEach((img, index) => {
-  img.style.cursor = "pointer";
-  img.addEventListener('click', () => {
-    currentIndex = index;
-    lightboxImg.src = images[currentIndex].src;
-    lightbox.classList.add('show');
-  });
-});
-
-lightbox.querySelector('.next').addEventListener('click', (e) => {
-  e.stopPropagation();
-  currentIndex = (currentIndex + 1) % images.length;
-  lightboxImg.src = images[currentIndex].src;
-});
-
-lightbox.querySelector('.prev').addEventListener('click', (e) => {
-  e.stopPropagation();
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  lightboxImg.src = images[currentIndex].src;
-});
-
-lightbox.addEventListener('click', () => {
-  lightbox.classList.remove('show');
-});
+  window.location.href = `mailto:Ahmed.m.alslamy@gmail.com?subject=طلب تواصل&body=${body}`;
+}
 </script>
+
 </body>
 </html>
